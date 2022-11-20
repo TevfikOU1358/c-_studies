@@ -272,7 +272,7 @@ int main() {
 	//int (*fp)()noexcpet = foo; syntax error noexcept olmayan fonksiyonun adresi noexcept olan adrese atanamaz.
 }
 */
-
+/*
 class Base {
 public:
 	virtual void func()noexcept;
@@ -288,4 +288,68 @@ public:
 	const char* what() const override;  //normalde error gcc derleyicisi error vermesi lazým. what() tanýmlý olduðu exception taban sýnýfý
 	//tanýmýda what() kýsýtlayýcý noexcept specifier ýna sahip
 };
-int main(){}
+*/
+/*
+//Function Try Block
+void func(int x)
+try {
+	if (x == 0)	throw 1;
+}
+catch(int) {
+	cout << "exception caught\n";
+}
+
+class Member {
+public:
+	Member() {
+		throw runtime_error{ "hata ..." };
+	}
+};
+
+class Tef {
+
+public:
+	Tef()
+		try {
+
+	}
+	catch (exception& ex) {
+		cout << "exception caught in  ctor " << ex.what()<<"\n";
+	}
+private:
+	Member mx;
+};
+
+int main() {
+	func(0); //exception caught
+	try {
+		Tef t;  //exception caught:hata ... : member ýn içindeki hata funtion try block sayesinde ctor da exception yakalandý. Program yine sonlandý.
+	}
+	catch (exception& ex) {
+		cout << "exception caught in  main" << ex.what() << "\n";  //bunun çapðýrýlma sebebi derleyici ctor un catch bloðunda rethrow statement yazýyor.
+	}
+
+}
+*/
+/*
+func(Tef x)  //funtion try block kesinlikle parametre olarak çaðýrýlan copy ctorun i.çindeki extion u yakalayamaz.
+try {
+
+}
+catch(const exception &ex) {
+
+}
+*/
+
+/*
+Resource leakage :
+Memory de bir alan allocate edildi.Exception yakalandý.
+Kaynak geeri verilmiyor.
+Bu duruma resource leak olur.
+*/
+
+/*
+Exception safety:
+Basic quarantee:Nesne hala kullanýlabilir olacak.Statinde herhangi bir deðiþiklik olabilir
+Strong Quarantee:Nesne hala kullanýlabilir ve state i de asla deðiþemez.
+*/
