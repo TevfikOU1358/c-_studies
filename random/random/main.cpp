@@ -131,7 +131,7 @@ int main() {
 	discrete_distribution<int> dist{ 0.1, 0.3, 0.5, 0.1, 0.4 }; //bütün parametreler aðýrlýk
 }
 */
-#include <algorithm>
+/*
 #include <algorithm>
 int main() {
 	const char* pdays[] = { "pazartesi", "sali", "carsamba", "persemnbe", "cuma", "cumartesi", "pazar" };
@@ -150,3 +150,23 @@ int main() {
 	generate(begin(a), end(a), eng);//kopyalama semantigi
 	generate(begin(a), end(a), ref(eng));//kopyalama semantigi
 }
+*/
+template <typename T>
+ostream& operator<<(ostream& os, vector<T> ivec) {
+	os << '[';
+	for (auto i : ivec) {
+		os << i << ' ';
+	}
+	os << ']';
+	return os;
+}
+#include <algorithm> 
+int main() {  //30 tane random sayiyi vectore atan program
+	mt19937 eng{ random_device{}() };
+	uniform_int dist{ 1000, 1200 };
+	vector<int> ivec(30);
+	generate(ivec.begin(), ivec.end(), [&] {return dist(eng); });
+
+	cout << ivec;  // [1007 1197 1085 1076 1145 1082 1158 1014 1197 1192 1088 1135 1063 1182 1172 1182 1169 1151 1179 1079 1178 1061 1062 1172 1005 1130 1079 1127 1147 1055 ]
+}
+
